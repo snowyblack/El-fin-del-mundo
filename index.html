@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>El Fin del Mundo</title>
+    <style>
+        body {
+            background-color: black;
+            color: crimson;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            padding-top: 100px;
+        }
+        #contador {
+            font-size: 48px;
+            margin-top: 20px;
+        }
+        #versiculo {
+            font-size: 24px;
+            margin-top: 50px;
+            color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <h1>🌍 El Fin del Mundo 🌋</h1>
+    <p id="contador">Cargando...</p>
+    <p id="versiculo"></p>
+
+    <audio autoplay loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3" type="audio/mpeg">
+        Tu navegador no soporta audio HTML5.
+    </audio>
+
+    <script>
+        var fechaFin = new Date();
+        fechaFin.setHours(24, 0, 0, 0); // medianoche de hoy
+
+        var versiculos = [
+            "Salmo 23:4 - Aunque ande en valle de sombra de muerte, no temeré mal alguno...",
+            "Salmo 7:11 - Dios es juez justo, y un Dios que se indigna cada día contra el impío.",
+            "Salmo 9:17 - Los malos serán trasladados al Seol, todas las naciones que se olvidan de Dios.",
+            "Salmo 73:18-19 - Ciertamente los has puesto en deslizaderos; en asolamientos caerán.",
+            "Salmo 50:3 - Vendrá nuestro Dios, y no callará; fuego consumirá delante de él..."
+        ];
+
+        function cambiarVersiculo() {
+            var v = versiculos[Math.floor(Math.random() * versiculos.length)];
+            document.getElementById("versiculo").innerText = v;
+        }
+
+        cambiarVersiculo();
+        setInterval(cambiarVersiculo, 10000); // Cambia cada 10 segundos
+
+        var x = setInterval(function() {
+            var ahora = new Date().getTime();
+            var diferencia = fechaFin - ahora;
+
+            var horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+            var segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+            document.getElementById("contador").innerHTML =
+                horas + "h " + minutos + "m " + segundos + "s ";
+
+            if (diferencia < 0) {
+                clearInterval(x);
+                document.getElementById("contador").innerHTML = "💥 El fin ha llegado 💀";
+                document.getElementById("versiculo").innerText = "Apocalipsis 6:17 - Porque el gran día de su ira ha llegado, ¿y quién podrá sostenerse en pie?";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
